@@ -83,11 +83,9 @@ function reset() {
     buttons.forEach((btn)=>{
         btn.innerText = ''
     })
-    // while(board.firstChild){
-    //     board.firstChild.remove();
-    // }
+    
     Gameboard.resetBoard();
-    // displayBoard(Gameboard.gameboard);
+    
     container.lastChild.remove()
     board.style.cssText = 'pointer-events:auto';
 }
@@ -125,7 +123,6 @@ function displayResult(winner = 'draw') {
 
 function btnClick(e){
     const cell = e.target;
-    var win = false;
     // console.log(cell);
     // console.log(Gameboard.currentPlayer);
     if(cell.innerText === '') {
@@ -145,7 +142,7 @@ function btnClick(e){
             return;
         }
         Gameboard.switchPlayer();
-        // console.log(Gameboard.gameboard)   
+    
     }
     
 }
