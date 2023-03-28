@@ -13,14 +13,13 @@ function Player(marker) {
 }
 
 var Gameboard = (function() {
+
     const player1 = Player('o');
     const player2 = Player('x');
     currentPlayer = player1;
+
     gameboard = [];
-    // gameboard = [['','',''],
-    //              ['','',''],
-    //              ['','','']
-    //             ];
+    
     const switchPlayer = function() {
         if(this.currentPlayer === this.player1) {
             this.currentPlayer = this.player2;
@@ -28,10 +27,12 @@ var Gameboard = (function() {
             this.currentPlayer = this.player1;
         }
     };
+
     const resetBoard = function() {
-        this.gameboard = [];
+        this.gameboard = [0,0,0,0,0,0,0,0,0];
         this.currentPlayer = player1;
     }
+
     return {
         currentPlayer,
         gameboard,
@@ -40,6 +41,7 @@ var Gameboard = (function() {
         switchPlayer,
         resetBoard
     }
+
 })();
 
 
@@ -76,11 +78,16 @@ function checkWin() {
 }
 
 function reset() {
-    while(board.firstChild){
-        board.firstChild.remove();
-    }
+    // remove out all the 9 buttons on board
+    const buttons = document.querySelectorAll('.btns');
+    buttons.forEach((btn)=>{
+        btn.innerText = ''
+    })
+    // while(board.firstChild){
+    //     board.firstChild.remove();
+    // }
     Gameboard.resetBoard();
-    displayBoard(Gameboard.gameboard);
+    // displayBoard(Gameboard.gameboard);
     container.lastChild.remove()
     board.style.cssText = 'pointer-events:auto';
 }
@@ -119,8 +126,8 @@ function displayResult(winner = 'draw') {
 function btnClick(e){
     const cell = e.target;
     var win = false;
-    console.log(cell);
-    console.log(Gameboard.currentPlayer);
+    // console.log(cell);
+    // console.log(Gameboard.currentPlayer);
     if(cell.innerText === '') {
         // mark the cell
         // markCell(e.target, )
@@ -132,22 +139,19 @@ function btnClick(e){
         if(checkWin()){
             let winner = Gameboard.currentPlayer.marker.toUpperCase();
             displayResult(winner);
-            // reset();
             return;
         }else if(checkDraw()){
             displayResult();
-            // reset();
             return;
         }
         Gameboard.switchPlayer();
-        console.log(Gameboard.gameboard)   
+        // console.log(Gameboard.gameboard)   
     }
     
 }
 
 function createBtn() {
     const btn = document.createElement('button');
-    // btn.innerText = '';
     btn.addEventListener('click', btnClick)
     return btn;
 }
@@ -157,6 +161,7 @@ function displayBoard(boardArr) {
     for(let i=0; i<9; i++) {
         let btn = createBtn();
         btn.data  = i;
+        btn.className = "btns";
         boardArr[i] = 0;
         board.appendChild(btn);
     }
