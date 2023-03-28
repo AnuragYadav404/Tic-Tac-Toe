@@ -1,0 +1,26 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 900px;
+    width: 900px;
+    background-color: yellow;
+}
+
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    /* justify-content: center;
+    align-items: center; */
+    gap: 4px;
+    height: 300px;
+    width: 300px;
+    background-color: black;
+}
