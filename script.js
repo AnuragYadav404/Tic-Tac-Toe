@@ -1,14 +1,25 @@
 const board = document.querySelector('.board');
 const container = document.querySelector('.container')
 
+var playeOneName = prompt("Enter playerOne name");
+var playerTwoName = prompt("Enter playerTwo name");
+
 // set value for o->3, x->5 ... will later help in game finsish
 function Player(marker) {
     const value = (marker === 'o') ? 3 : 5;
     const color = (marker === 'o') ? 'red' : 'blue';
+    const setName = function(name) {
+        this.name = name;
+    }
+    const getName = function() {
+        return this.name;
+    }
     return {
         marker,
         value,
-        color
+        color,
+        setName,
+        getName,
     }
 }
 
@@ -33,13 +44,26 @@ var Gameboard = (function() {
         this.currentPlayer = player1;
     }
 
+    const setNames = function(name1, name2) {
+        player1.setName(name1);
+        player2.setName(name2);
+    }
+
+    const getNames = function() {
+        let playerOneName = player1.getName();
+        let playerTwoName = player2.getName();
+        return {playeOneName, playerTwoName};
+    }
+
     return {
         currentPlayer,
         gameboard,
         player1,
         player2,
         switchPlayer,
-        resetBoard
+        resetBoard,
+        setNames,
+        getNames,
     }
 
 })();
@@ -134,7 +158,7 @@ function btnClick(e){
         Gameboard.gameboard[e.target.data] = Gameboard.currentPlayer.value;
         //check for win
         if(checkWin()){
-            let winner = Gameboard.currentPlayer.marker.toUpperCase();
+            let winner = Gameboard.currentPlayer.getName();
             displayResult(winner);
             return;
         }else if(checkDraw()){
@@ -165,5 +189,19 @@ function displayBoard(boardArr) {
 
 }
 
+function instructionDiv(name1, name2) {
+    const divEle = document.createElement('div');
+    const text1 = document.createElement('h2');
+    const text2 = document.createElement('h2');
+    text1.innerText = `'O' is ${name1}`;
+    text2.innerText = `'X' is ${name2}`;
+    divEle.appendChild(text1);
+    divEle.appendChild(text2);
+    divEle.className = 'head';
+    container.appendChild(divEle);
 
+}
+
+Gameboard.setNames(playeOneName, playerTwoName);
+instructionDiv(playeOneName, playerTwoName);
 displayBoard(Gameboard.gameboard);
