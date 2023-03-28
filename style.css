@@ -2,6 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
 }
 
 .container {
@@ -10,7 +11,8 @@ body {
     align-items: center;
     height: 900px;
     width: 900px;
-    background-color: yellow;
+    flex-direction: column;
+    /* background-color: yellow; */
 }
 
 .board{
@@ -23,4 +25,10 @@ body {
     height: 300px;
     width: 300px;
     background-color: black;
+}
+
+.head {
+    color: gold;
+    margin-bottom: 16px;
+    font-size:24px;
 }

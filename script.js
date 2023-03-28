@@ -1,5 +1,7 @@
 const board = document.querySelector('.board');
+const container = document.querySelector('.container')
 
+// set value for o->3, x->5 ... will later help in game finsish
 function Player(marker) {
     const value = (marker === 'o') ? 3 : 5;
     const color = (marker === 'o') ? 'red' : 'blue';
@@ -79,17 +81,37 @@ function reset() {
     }
     Gameboard.resetBoard();
     displayBoard(Gameboard.gameboard);
+    container.lastChild.remove()
+    board.style.cssText = 'pointer-events:auto';
+}
+
+
+
+
+function displayResult(winner = 'draw') {
+    board.style.cssText = 'pointer-events:none';
+    // const divEle = create displayDiv(); 
+    const divEle = document.createElement('div');
+    const title = document.createElement('h3');
+    const btn = document.createElement('button');
     
-}
-
-
-function declareDraw() {
-    alert("The game ends with a draw :(");
-    reset();
-}
-
-function declareWin() {
+    divEle.style.cssText = 'background: linear-gradient(90deg, #efd5ff 0%, #515ada 100%);width:600px;text-align:center;margin-top:32px;border-radius:20px;padding:20px;';
+    title.style.cssText = 'font-size:32px'
+    btn.style.cssText = 'background: linear-gradient(90deg, #fcff9e 0%, #c67700 100%);font-size:16px;padding:16px;border-radius:10px;font-weight:600;border:2px solid yellow;border-radius:20px;'
    
+    btn.innerText = 'Play Again';
+
+    divEle.appendChild(title);
+    divEle.appendChild(btn);
+    
+    btn.addEventListener('click', reset);
+    container.appendChild(divEle);
+    
+    if(winner == 'draw') {  
+        title.innerText = `game ended in a DRAW :()`
+    }else {
+        title.innerText = `${winner} has won the game!! sewwwy`;   
+    }
 }
 
 
@@ -108,17 +130,17 @@ function btnClick(e){
         Gameboard.gameboard[e.target.data] = Gameboard.currentPlayer.value;
         //check for win
         if(checkWin()){
-            alert(`${Gameboard.currentPlayer.marker.toUpperCase()} has won the game`);
-            reset();
+            let winner = Gameboard.currentPlayer.marker.toUpperCase();
+            displayResult(winner);
+            // reset();
             return;
         }else if(checkDraw()){
-            alert("The game ends with a draw :(");
-            reset();
+            displayResult();
+            // reset();
             return;
         }
         Gameboard.switchPlayer();
-        console.log(Gameboard.gameboard)
-        
+        console.log(Gameboard.gameboard)   
     }
     
 }
