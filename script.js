@@ -193,10 +193,13 @@ function instructionDiv(name1, name2) {
     const divEle = document.createElement('div');
     const text1 = document.createElement('h2');
     const text2 = document.createElement('h2');
+    const text3 = document.createElement('h2');
     text1.innerText = `'O' is ${name1}`;
     text2.innerText = `'X' is ${name2}`;
+    text3.innerText = `${name1} starts first`;
     divEle.appendChild(text1);
     divEle.appendChild(text2);
+    divEle.appendChild(text3);
     divEle.className = 'head';
     container.appendChild(divEle);
 
